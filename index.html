@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css">
+    <title>Lista de Tarefas</title>
+  </head>
+
+  <body>
+    <header>
+      <p>Tasks</p>
+      <input
+        type="search"
+        id="campo-pesquisa"
+        placeholder="Qual task você procura ?"
+      />
+      <button type="submit" id="pesquisa">Pesquisar</button>
+    </header>
+
+    <div id="tarefas">
+
+      <div>
+        <button id="adiciona_tarefa">+</button>
+        <input type="text" id="add" placeholder="adicionar uma nova tarefa">
+        <input type="date" id="input-data">Data de Inicio
+      </div>
+
+      <ul id="lista-tarefas">
+      
+      </ul>
+
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
