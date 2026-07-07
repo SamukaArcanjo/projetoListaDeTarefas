@@ -4,12 +4,44 @@ let inputDataTarefa = document.getElementById('input-data')
 
 let listaTarefas = document.getElementById('lista-tarefas')
 
+let tarefas = []
+
+// Trazendo tarefas salvas
+let tarefasLocal = localStorage.getItem('tarefas')
+let tarefasConvertida = JSON.parse(tarefasLocal) || []
+
+
+tarefasConvertida.forEach(tarefas => {
+        criarTarefaNaTela(tarefas['tarefa'],tarefas['data'])
+});
+
 adicionarTarefa.addEventListener('click', function() {
 
     // separo as datas corretamente
+
+    criarTarefaNaTela(inputAddTarefa.value,inputDataTarefa.value)
+
+
+    // Crio um array com objetos para guardar os dados
+    tarefas.push({tarefa: inputAddTarefa.value, data: inputDataTarefa.value})
+    // transfomo em JSON
+    const textTarefas = JSON.stringify(tarefas)
+    //guardo tarefas com localStorage
+    localStorage.setItem('tarefas', JSON.stringify(tarefas))
+
+
+    // Zero os inputs, sem deixar valores 
+    inputAddTarefa.value = ''
+    inputDataTarefa.value = ''
+
+
+})
+
+
+
+function criarTarefaNaTela(nome,data) {
     const [ano,mes,dia] = inputDataTarefa.value.split('-')
 
-    //Crio os elementos da tarefa
     const li = document.createElement('li')
     const check = document.createElement('input')
     check.type = 'checkbox'
@@ -17,34 +49,26 @@ adicionarTarefa.addEventListener('click', function() {
     const dataTask = document.createElement('p')
     const remover = document.createElement('button')
 
-    // Adiciono o conteudo dos inputs dentro da tarefa = task e da data = datatask, adicionando o x do remover também
-    remover.textContent = 'x'
-    task.textContent = inputAddTarefa.value
-    dataTask.textContent = `${dia}/${mes}/${ano}`
+    task.textContent = nome
+    dataTask.textContent = data
 
-    // Agora adiciono tudo dentro da Li e depois dentro da UL, assim criando as listas 
     li.appendChild(check)
     li.appendChild(task)
     li.appendChild(dataTask)
     li.appendChild(remover)
     listaTarefas.appendChild(li)
 
-    // Nomeio as classes nas tarefas e datas, como esta no css
     task.className = 'nome-tarefa'
     dataTask.className = 'data-tarefa'
     remover.className = 'btn-remover'
-
-    // Zero os inputs, sem deixar valores 
-    inputAddTarefa.value = ''
-    inputDataTarefa.value = ''
-
 
     //Adicionando função sublinhar ao clicar em marcado
     check.addEventListener('click',function() {
     li.classList.toggle('concluida')
     })
+
     //Adicionando função de remover tarefa ao clicar no botão
     remover.addEventListener('click',function() {
         listaTarefas.removeChild(li)
     })
-})
+}
