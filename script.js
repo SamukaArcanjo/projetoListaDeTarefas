@@ -17,10 +17,8 @@ tarefasConvertida.forEach(tarefas => {
 
 adicionarTarefa.addEventListener('click', function() {
 
-    // separo as datas corretamente
-
+    // Chamo a função criar tarefas
     criarTarefaNaTela(inputAddTarefa.value,inputDataTarefa.value)
-
 
     // Crio um array com objetos para guardar os dados
     tarefas.push({tarefa: inputAddTarefa.value, data: inputDataTarefa.value})
@@ -33,14 +31,10 @@ adicionarTarefa.addEventListener('click', function() {
     // Zero os inputs, sem deixar valores 
     inputAddTarefa.value = ''
     inputDataTarefa.value = ''
-
-
 })
 
-
-
 function criarTarefaNaTela(nome,data) {
-    const [ano,mes,dia] = inputDataTarefa.value.split('-')
+    const [ano,mes,dia] = data.split('-')
 
     const li = document.createElement('li')
     const check = document.createElement('input')
@@ -50,7 +44,8 @@ function criarTarefaNaTela(nome,data) {
     const remover = document.createElement('button')
 
     task.textContent = nome
-    dataTask.textContent = data
+    dataTask.textContent = `${dia}/${mes}/${ano}`
+    remover.textContent = 'x'
 
     li.appendChild(check)
     li.appendChild(task)
@@ -70,5 +65,6 @@ function criarTarefaNaTela(nome,data) {
     //Adicionando função de remover tarefa ao clicar no botão
     remover.addEventListener('click',function() {
         listaTarefas.removeChild(li)
+        localStorage.removeItem('tarefas')
     })
 }
